@@ -7,11 +7,10 @@ app.use(express.json())
 app.use(express.urlencoded(({ extended: true })))
 app.use(cors())
 
-mongoose.connect("mongodb+srv://anuprajvarma:anupraj@4546@cluster0.i6s0p5h.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, () => {
-    console.log("DB connected")
+mongoose.connect("mongodb+srv://anuprajvarma:PV5s0d3SfFD9ldjL@cluster0.i6s0p5h.mongodb.net/?retryWrites=true&w=majority").then(() => {
+    console.log("connection is succesfully")
+}).catch((err) => {
+    console.log(err)
 })
 
 const userSchema = new mongoose.Schema({
@@ -38,28 +37,31 @@ app.post("/login", (req, res) => {
     })
 })
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
+
     const { name, email, password } = req.body
-    console.log(req.body);
-    console.log("hiiiiii")
-    User.findOne({ email: email }, (err, user) => {
-        if (user) {
-            res.send({ message: "User already registerd" })
-        } else {
+
+    try {
+
+        useExist = await User.findOne({ email: email });
+        if (userExsit) {
+            res.send({ message: "this email already exit" });
+        }
+        else {
             const user = new User({
                 name,
                 email,
                 password
             })
-            user.save(err => {
-                if (err) {
-                    res.send(err)
-                } else {
-                    res.send({ message: "Successfully Registered, Please login now." })
-                }
-            })
+            console.log(user)
+
+            await user.save();
+            res.send("user register succesfully")
         }
-    })
+
+    } catch (err) {
+        console.log(err)
+    }
 
 })
 
