@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/anuprajvarma/magic_paint#readme",
   "dependencies": {
-    "express": "^4.18.1"
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2"
   }
 }
