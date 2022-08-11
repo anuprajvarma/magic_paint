@@ -1,13 +1,15 @@
+const dotenv = require('dotenv')
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded(({ extended: true })))
-app.use(cors())
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded(({ extended: true })));
+app.use(cors());
+dotenv.config();
 
-mongoose.connect("mongodb+srv://anuprajvarma:PV5s0d3SfFD9ldjL@cluster0.i6s0p5h.mongodb.net/?retryWrites=true&w=majority").then(() => {
+mongoose.connect(process.env.Mongodb_Url).then(() => {
     console.log("connection is succesfully")
 }).catch((err) => {
     console.log(err)
